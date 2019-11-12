@@ -323,14 +323,6 @@ local function setFinalVelocityAtDistance(v_i, v_f, x, stock, consist)
   local rolling_resistance_force = total_weight * 0.01471
   local resting_acceleration = -rolling_resistance_force / total_weight
 
-  term.clear()
-  print("--------------------------------------")
-  print("Immersive Railroading Speed Controller")
-  print("--------------------------------------")
-  print("| Target Velocity: " .. params.final_velocity .. " Km/h")
-  print("| Distance: " .. params.distance .. " m")
-  print("--------------------------------------")
-
   if (VERBOSE) then
     print("[DEBUG-INFO]:")
     print("Vi = " .. v_i .. " m/s")
@@ -400,9 +392,17 @@ local function handleEvent(augment_type, stock_uuid, params)
 
   if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and rsdetect.getInput(1) == 0) then
     -- Assume that the detector and the controller are at the same point.
-        local consist = detector.consist()
+    local consist = detector.consist()
 
-        if not consist then return end
+    if not consist then return end
+
+    term.clear()
+    print("--------------------------------------")
+    print("Immersive Railroading Speed Controller")
+    print("--------------------------------------")
+    print("| Target Velocity: " .. params.final_velocity .. " Km/h")
+    print("| Distance: " .. params.distance .. " m")
+    print("--------------------------------------")
 
     setFinalVelocityAtDistance(
       consist.speed_km,
