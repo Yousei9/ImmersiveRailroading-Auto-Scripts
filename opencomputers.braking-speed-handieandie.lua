@@ -21,9 +21,10 @@ wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scri
 ]]--
 
 local DEBUG = false
-local VERBOSE = false
+local VERBOSE = true
 local EndScriptAutomatically = false
 local EndScript = false
+
 --[[
 This function can be implemented by users for added functionality.
 
@@ -40,7 +41,7 @@ How many decimal points of precision should throttle setting have?
 Set it to a power of 0.1. Note that more precision means MUCH MORE
 computational complexity.
 --]]
-local THROTTLE_PRECISION = 0.001
+local THROTTLE_PRECISION = 0.01
 
 local CONFIG_FILE = "ir_speed_control_config"
 
@@ -389,14 +390,6 @@ local function handleEvent(augment_type, stock_uuid, params)
 	local stock = detector.info()
 	local rsdetect = component.redstone
 
-	term.clear()
-	print("--------------------------------------")
-	print("Immersive Railroading Speed Controller")
-	print("--------------------------------------")
-	print("| Target Velocity: " .. params.final_velocity .. " Km/h")
-	print("| Distance: " .. params.distance .. " m")
-	print("--------------------------------------")
-  
 	if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and rsdetect.getInput(1) == 0) then
 		-- Assume that the detector and the controller are at the same point.
         local consist = detector.consist()
