@@ -15,10 +15,13 @@ This script focuses on two major actions:
 	1. Slowing down the train with brakes.
 	2. Speeding up with the throttle.
 Requires - Redstonecard
+
+To install use a network card and run
+wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua train_control.lua
 ]]--
 
 local DEBUG = false
-local VERBOSE = true
+local VERBOSE = false
 local EndScriptAutomatically = false
 local EndScript = false
 --[[
@@ -385,6 +388,15 @@ end
 local function handleEvent(augment_type, stock_uuid, params)
 	local stock = detector.info()
 	local rsdetect = component.redstone
+
+	term.clear()
+	print("--------------------------------------")
+	print("Immersive Railroading Speed Controller")
+	print("--------------------------------------")
+	print("| Target Velocity: " .. params.final_velocity .. " Km/h")
+	print("| Distance: " .. params.distance .. " m")
+	print("--------------------------------------")
+  
 	if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and rsdetect.getInput(1) == 0) then
 		-- Assume that the detector and the controller are at the same point.
         local consist = detector.consist()
