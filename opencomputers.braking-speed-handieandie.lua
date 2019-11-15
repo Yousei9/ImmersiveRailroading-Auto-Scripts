@@ -4,7 +4,7 @@ Tweaked: Andrew B
 Tweaked More: LtBrandon
 File: train_control.lua
 Version: 1.1
-Last Modified: 26-01-2019 - Andrboot
+Last Modified: 2019.11.15 Optera
 
 This script provides simple ways to set target velocities and distances for
 trains from the mod Immersive Engineering. To set it up, place two augments,
@@ -396,13 +396,7 @@ local function handleEvent(augment_type, stock_uuid, params)
 
     if not consist then return end
 
-    term.clear()
-    print("--------------------------------------")
-    print("Immersive Railroading Speed Controller")
-    print("--------------------------------------")
-    print("| Target Velocity: " .. params.final_velocity .. " Km/h")
-    print("| Distance: " .. params.distance .. " m")
-    print("--------------------------------------")
+    write_header(params)
 
     setFinalVelocityAtDistance(
       consist.speed_km,
@@ -504,18 +498,8 @@ local function testRun(v_i, v_f, x, b_e, stock, consist)
 
 end
 
---------------------------------------------------|
--- ACTUAL SCRIPT: This is the program entry point.|
---------------------------------------------------|
-
-
-
-
-if (not DEBUG) then
-
-  local params = getParameters({...})
-  os.sleep(1)
-
+-- Write header containing selected settings
+local function write_header(params)
   term.clear()
   print("--------------------------------------")
   print("Immersive Railroading Speed Controller")
@@ -523,6 +507,19 @@ if (not DEBUG) then
   print("| Target Velocity: " .. params.final_velocity .. " Km/h")
   print("| Distance: " .. params.distance .. " m")
   print("--------------------------------------")
+  print()
+end
+
+--------------------------------------------------|
+-- ACTUAL SCRIPT: This is the program entry point.|
+--------------------------------------------------|
+
+if (not DEBUG) then
+
+  local params = getParameters({...})
+  os.sleep(1)
+
+  write_header(params)
 
   while not EndScriptAutomatically or not EndScript do
     event_name, address, augment_type, stock_uuid = event.pull("ir_train_overhead")
