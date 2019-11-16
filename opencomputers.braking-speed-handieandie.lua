@@ -394,6 +394,7 @@ local function write_header(params)
   print("--------------------------------------")
   print("| Target Velocity: " .. params.final_velocity .. " Km/h")
   print("| Distance: " .. params.distance .. " m")
+  print("| Delay: " .. params.delay .. " s")
   print("--------------------------------------")
   print()
 end
@@ -410,6 +411,10 @@ local function handleEvent(augment_type, stock_uuid, params)
     if not consist then return end
 
     write_header(params)
+
+    if params.delay and params.delay > 0 then
+      os.sleep(params.delay)
+    end
 
     setFinalVelocityAtDistance(
       consist.speed_km,
@@ -467,9 +472,10 @@ local function getParameters(args)
   }
 
   -- Attempt to get arguments from command line, if given.
-  if (#args == 2) then
+  if (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
+    params.delay = tonumber(args[3])
     saveParameters(params)
     print("[i] Saved config to file.")
   elseif (fs ~= nil) then
