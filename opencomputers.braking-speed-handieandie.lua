@@ -464,19 +464,19 @@ parameters for the program.
 
 args - table: Command line arguments.
 
-return - float, float: VF and X
+return - float, float, int: VF and X
 --]]
 local function getParameters(args)
   local params = {
     final_velocity = 0,
-    distance = 40
+    distance = 40,
+    delay = 0
   }
 
   -- Attempt to get arguments from command line, if given.
   if (#args == 2) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
-    params.delay = 0
   elseif (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
