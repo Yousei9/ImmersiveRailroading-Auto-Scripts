@@ -41,7 +41,7 @@ How many decimal points of precision should throttle setting have?
 Set it to a power of 0.1. Note that more precision means MUCH MORE
 computational complexity.
 --]]
-local THROTTLE_PRECISION = 0.01
+local THROTTLE_PRECISION = 0.001
 
 local CONFIG_FILE = "ir_speed_control_config"
 
