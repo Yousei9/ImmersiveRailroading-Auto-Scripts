@@ -386,6 +386,19 @@ local function setFinalVelocityAtDistance(v_i, v_f, x, stock, consist)
   end
 end
 
+-- Write header containing selected settings
+local function write_header(params)
+  term.clear()
+  print("--------------------------------------")
+  print("Immersive Railroading Speed Controller")
+  print("--------------------------------------")
+  print("| Target Velocity: " .. params.final_velocity .. " Km/h")
+  print("| Distance: " .. params.distance .. " m")
+  print("--------------------------------------")
+  print()
+end
+
+
 local function handleEvent(augment_type, stock_uuid, params)
   local stock = detector.info()
   local rsdetect = component.redstone
@@ -496,18 +509,6 @@ local function testRun(v_i, v_f, x, b_e, stock, consist)
   print("  ratio    = " .. ratio)
   print()
 
-end
-
--- Write header containing selected settings
-local function write_header(params)
-  term.clear()
-  print("--------------------------------------")
-  print("Immersive Railroading Speed Controller")
-  print("--------------------------------------")
-  print("| Target Velocity: " .. params.final_velocity .. " Km/h")
-  print("| Distance: " .. params.distance .. " m")
-  print("--------------------------------------")
-  print()
 end
 
 --------------------------------------------------|
