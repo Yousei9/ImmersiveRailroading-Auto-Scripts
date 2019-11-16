@@ -403,9 +403,16 @@ end
 
 local function handleEvent(augment_type, stock_uuid, params)
   local stock = detector.info()
-  local rsdetect = component.redstone
+  local rsdetect = component.redstone.getInput()
+  local rsdetected = false
+  for k,v in pairs(rsdetect) do
+    if v > 0 then
+      rsdetected = true
+      break
+    end
+  end
 
-  if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and rsdetect.getInput(1) == 0) then
+  if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and not rsdetected) then
     -- Assume that the detector and the controller are at the same point.
     local consist = detector.consist()
 
