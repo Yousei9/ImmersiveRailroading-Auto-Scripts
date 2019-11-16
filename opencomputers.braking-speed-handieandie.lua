@@ -472,7 +472,11 @@ local function getParameters(args)
   }
 
   -- Attempt to get arguments from command line, if given.
-  if (#args == 3) then
+  if (#args == 2) then
+    params.final_velocity = tonumber(args[1])
+    params.distance = tonumber(args[2])
+    params.delay = 0
+  elseif (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
     params.delay = tonumber(args[3])
