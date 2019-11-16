@@ -413,6 +413,7 @@ local function handleEvent(augment_type, stock_uuid, params)
     write_header(params)
 
     if params.delay and params.delay > 0 then
+      print("Waiting "..params.delay..".")
       os.sleep(params.delay)
     end
 
