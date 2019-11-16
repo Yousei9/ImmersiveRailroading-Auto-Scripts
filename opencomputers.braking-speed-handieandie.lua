@@ -485,6 +485,8 @@ local function getParameters(args)
   if (#args == 2) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
+    saveParameters(params)
+    print("[i] Saved config to file.")
   elseif (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
