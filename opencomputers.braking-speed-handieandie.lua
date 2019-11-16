@@ -18,6 +18,7 @@ Requires - Redstonecard
 
 To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua train_control.lua
+
 ]]--
 
 local DEBUG = false
@@ -413,10 +414,8 @@ local function handleEvent(augment_type, stock_uuid, params)
     write_header(params)
 
     if params.delay and params.delay > 0 then
-      print("Waiting "..params.delay.."s.")
-      for i=1, params.delay do
-        os.sleep(1)
-      end
+      print("Waiting "..params.delay.."s before adjusting speed.")
+      os.sleep(params.delay)
     end
 
     setFinalVelocityAtDistance(
