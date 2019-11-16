@@ -482,7 +482,7 @@ local function getParameters(args)
   elseif (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
-    params.delay = tonumber(args[3])
+    params.delay = math.floor(tonumber(args[3]))
     saveParameters(params)
     print("[i] Saved config to file.")
   elseif (fs ~= nil) then
