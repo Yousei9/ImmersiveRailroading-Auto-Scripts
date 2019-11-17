@@ -3,7 +3,7 @@ Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
 
 File: train_control.lua
 Version: 1.1
-Last Modified: 2019.11.17 Optera
+Last Modified: 2019-11-17 Optera
 
 This script provides simple ways to set target velocities and distances for
 trains from the mod Immersive Engineering. To set it up, place two augments,
@@ -19,6 +19,7 @@ To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua train_control.lua
 
 ]]--
+local VERSION = "1.1 2019-11-17"
 
 local DEBUG = false
 local VERBOSE = false
@@ -391,6 +392,7 @@ local function write_header(params)
   term.clear()
   print("--------------------------------------")
   print("Immersive Railroading Speed Controller")
+  print("Version: "..VERSION)
   print("--------------------------------------")
   print("| Target Velocity: " .. params.final_velocity .. " km/h")
   print("| Distance: " .. params.distance .. " m")
