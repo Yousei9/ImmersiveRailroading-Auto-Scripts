@@ -1,10 +1,9 @@
 --[[
-Author: Andrew Lalis
-Tweaked: Andrew B
-Tweaked More: LtBrandon
+Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
+
 File: train_control.lua
 Version: 1.1
-Last Modified: 2019.11.15 Optera
+Last Modified: 2019.11.17 Optera
 
 This script provides simple ways to set target velocities and distances for
 trains from the mod Immersive Engineering. To set it up, place two augments,
