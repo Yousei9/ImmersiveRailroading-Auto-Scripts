@@ -144,7 +144,7 @@ local function getTractionIntersect(throttle, horsepower, traction)
 end
 
 local function ApplyBrakes(BrakePower)
-    if VERBOSE then
+  if VERBOSE then
     print("  Applying brakes at power: "..BrakePower)
   end
 
@@ -213,6 +213,7 @@ local function slowDown(TrainMass, TrainVelocity, TargetVelocity, TargetDistance
 
             -- Tell the train to stop
             ApplyBrakes(BrakePower)
+            print("[-] " .. formatMps(TrainVelocity) .. " Km/h -> " .. formatMps(TargetVelocity) .. " Km/h, Brakes set to " .. BrakePower)
         end
     else
         -- Accelerate? This probably isn't needed, but let me know.
