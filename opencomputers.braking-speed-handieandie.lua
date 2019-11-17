@@ -22,7 +22,7 @@ wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scri
 ]]--
 
 local DEBUG = false
-local VERBOSE = true
+local VERBOSE = false
 local EndScriptAutomatically = false
 local EndScript = false
 
@@ -354,7 +354,7 @@ local function setFinalVelocityAtDistance(v_i, v_f, x, stock, consist)
   loco_traction = locotracions
   horsepower = locohorse
 
-  print("[i] " .. loco_name .. " passed overhead.")
+  -- print("[i] " .. loco_name .. " passed overhead.")
 
   -- Use the throttle to accelerate.
   if (target_acceleration > resting_acceleration) then
@@ -395,7 +395,7 @@ local function write_header(params)
   print("--------------------------------------")
   print("| Target Velocity: " .. params.final_velocity .. " Km/h")
   print("| Distance: " .. params.distance .. " m")
-  print("| Delay: " .. params.delay .. " s")
+  print("| Stop Duration: " .. params.stop_train .. " s")
   print("--------------------------------------")
   print()
 end
@@ -413,17 +413,25 @@ local function handleEvent(augment_type, stock_uuid, params)
   end
 
   if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and not rsdetected) then
-    -- Assume that the detector and the controller are at the same point.
-    local consist = detector.consist()
-
-    if not consist then return end
-
     write_header(params)
 
-    if params.delay and params.delay > 0 then
-      print("Waiting "..params.delay.."s before adjusting speed.")
-      os.sleep(params.delay)
+    local loco_name = getLocoName(stock.id)
+    print(loco_name.." detected.")
+
+    if params.stop_train and params.stop_train > 0 then
+      print("Stopping train for "..params.stop_train.."s before starting again.")
+      ApplyBrakes(1.0)
+      os.sleep(params.stop_train)
     end
+
+    -- Assume that the detector and the controller are at the same point.
+    local consist = detector.consist()
+    if not consist then
+      print("Warning: Consist not found.")
+      return
+    end
+
+    print("Initial velocity: "..consist.speed_km)
 
     setFinalVelocityAtDistance(
       consist.speed_km,
@@ -434,10 +442,9 @@ local function handleEvent(augment_type, stock_uuid, params)
     )
 
     -- Call user-defined function after all speed-dependent logic is done.
-
     onTrainOverhead(stock, consist, control)
 
-        EndScript = true
+    EndScript = true
   end
 end
 
@@ -478,7 +485,7 @@ local function getParameters(args)
   local params = {
     final_velocity = 0,
     distance = 40,
-    delay = 0
+    stop_train = 0,
   }
 
   -- Attempt to get arguments from command line, if given.
@@ -490,7 +497,7 @@ local function getParameters(args)
   elseif (#args == 3) then
     params.final_velocity = tonumber(args[1])
     params.distance = tonumber(args[2])
-    params.delay = math.floor(tonumber(args[3]))
+    params.stop_train = math.floor(tonumber(args[3]))
     saveParameters(params)
     print("[i] Saved config to file.")
   elseif (fs ~= nil) then
