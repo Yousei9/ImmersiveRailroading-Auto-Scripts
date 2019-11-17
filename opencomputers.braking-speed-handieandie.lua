@@ -433,8 +433,6 @@ local function handleEvent(augment_type, stock_uuid, params)
       return
     end
 
-    print("Current velocity: "..consist.speed_km.." km/h")
-
     setFinalVelocityAtDistance(
       consist.speed_km,
       params.final_velocity,
