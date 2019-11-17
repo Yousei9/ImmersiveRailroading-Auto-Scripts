@@ -393,7 +393,7 @@ local function write_header(params)
   print("--------------------------------------")
   print("Immersive Railroading Speed Controller")
   print("--------------------------------------")
-  print("| Target Velocity: " .. params.final_velocity .. " Km/h")
+  print("| Target Velocity: " .. params.final_velocity .. " km/h")
   print("| Distance: " .. params.distance .. " m")
   print("| Stop Duration: " .. params.stop_train .. " s")
   print("--------------------------------------")
@@ -431,7 +431,7 @@ local function handleEvent(augment_type, stock_uuid, params)
       return
     end
 
-    print("Initial velocity: "..consist.speed_km)
+    print("Initial velocity: "..consist.speed_km.." km/h")
 
     setFinalVelocityAtDistance(
       consist.speed_km,
