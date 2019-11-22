@@ -37,9 +37,9 @@ local LOCO_PREFIX = "rolling_stock/locomotives/"
 local EndScript = false
 local Settings = {  --default settings, will be overwritten by config and arguments
   Stop_Duration = 10,
-  RS_Signal = 2,
-  RS_Lock = 3,
-  RS_BlockClear = 1,
+  RS_Signal = 3,
+  RS_Lock = 5,
+  RS_BlockClear = 0,
   Throttle = 0.5,
 }
 
