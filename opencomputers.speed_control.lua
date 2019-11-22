@@ -16,10 +16,10 @@ This script focuses on two major actions:
 Requires - Redstonecard
 
 To install use a network card and run
-wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua ir_speed_control.lua
+wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.speed_control.lua ir_speed_control.lua
 
 ]]--
-local VERSION = "1.1 2019-11-17"
+local VERSION = "1.1 2019-11-22"
 
 local DEBUG = false
 local VERBOSE = false

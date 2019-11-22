@@ -26,6 +26,8 @@ Redstone Refence using Redstone Card on computer NOT redstone block
   Left (left), Number: 5
   Created by Don_Spruce
 
+To install use a network card and run
+wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.signal_control.lua ir_signal_control.lua
 ]]--
 
 local VERSION = "1.1 2019-11-22"
