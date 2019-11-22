@@ -1,5 +1,5 @@
 --[[
-Authors: andrboot , Optera
+Authors: andrboot, Optera
 
 File: ir_signal_control.lua
 Version: 1.1
