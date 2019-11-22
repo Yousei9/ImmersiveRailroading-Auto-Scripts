@@ -1,7 +1,7 @@
 --[[
 Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
 
-File: train_control.lua
+File: ir_speed_control.lua
 Version: 1.1
 Last Modified: 2019-11-17 Optera
 
@@ -16,7 +16,7 @@ This script focuses on two major actions:
 Requires - Redstonecard
 
 To install use a network card and run
-wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua train_control.lua
+wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.braking-speed-handieandie.lua ir_speed_control.lua
 
 ]]--
 local VERSION = "1.1 2019-11-17"
@@ -44,7 +44,7 @@ computational complexity.
 --]]
 local THROTTLE_PRECISION = 0.001
 
-local CONFIG_FILE = "ir_speed_control_config"
+local CONFIG_FILE = "ir_speed_control.cfg"
 
 
 
