@@ -2,7 +2,7 @@
 Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
 
 File: ir_speed_control.lua
-Version: 1.1
+Version: 1.3
 Last Modified: 2019-11-22 Optera
 
 This script provides simple ways to set target velocities and distances for
@@ -19,7 +19,7 @@ To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.speed_control.lua ir_speed_control.lua
 
 ]]--
-local VERSION = "1.1 2019-11-22"
+local VERSION = "1.3 2019-11-22"
 
 local DEBUG = false
 local VERBOSE = false
@@ -459,9 +459,10 @@ return - table: A table of parameters.
 --]]
 local function readParameters()
   local f = io.open(CONFIG_FILE, "r")
-  local params = serialization.unserialize(f:read("*a"))
+  if not f then return nil end
+  local settings = serialization.unserialize(f:read("*a"))
   f:close()
-  return params
+  return settings
 end
 
 --[[
@@ -485,8 +486,11 @@ local function getParameters(args)
     saveParameters(params)
     print("[i] Saved config to file.")
   elseif (fs ~= nil) then
-    for k,v in pairs(readParameters()) do
-      params[k] = v
+    local read_parameters = readParameters()
+    if read_parameters then
+      for k,v in pairs(read_parameters) do
+        params[k] = v
+      end
     end
     print("[i] Loaded config from file.")
   end
