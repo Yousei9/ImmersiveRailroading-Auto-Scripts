@@ -30,7 +30,7 @@ To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.signal_control.lua ir_signal_control.lua
 ]]--
 
-local VERSION = "1.1 2019-11-22"
+local VERSION = "1.2 2019-11-23"
 local CONFIG_FILE = "ir_signal_control.cfg"
 local LOCO_PREFIX = "rolling_stock/locomotives/"
 
