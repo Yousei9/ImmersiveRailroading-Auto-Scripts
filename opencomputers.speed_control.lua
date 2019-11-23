@@ -3,7 +3,7 @@ Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
 
 File: ir_speed_control.lua
 Version: 1.3
-Last Modified: 2019-11-22 Optera
+Last Modified: 2019-11-23 Optera
 
 This script provides simple ways to set target velocities and distances for
 trains from the mod Immersive Engineering. To set it up, place two augments,
@@ -19,7 +19,7 @@ To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.speed_control.lua ir_speed_control.lua
 
 ]]--
-local VERSION = "1.3 2019-11-22"
+local VERSION = "1.4 2019-11-23"
 
 local DEBUG = false
 local VERBOSE = false
@@ -186,9 +186,7 @@ local function slowDown(TrainMass, TrainVelocity, TargetVelocity, TargetDistance
         local MaxBrakeAcceleration = MaxBrakeNewtons / TrainMass
 
         if AccelerationNeeded > MaxBrakeAcceleration then
-            print("Warning! Train is going too fast and will not stop in time!")
-            print("Braking acceleration required: ", AccelerationNeeded)
-            print("Braking acceleration available: ", MaxBrakeAcceleration)
+            print(" [-] " .. formatMps(TrainVelocity) .. " Km/h -> " .. formatMps(TargetVelocity) .. " Km/h, Brakes set to 1.0/"..AccelerationNeeded)
             ApplyBrakes(1.0)
         else
             -- I'm sure this could be done mathematically, but we're just going to bruteforce it
@@ -213,11 +211,11 @@ local function slowDown(TrainMass, TrainVelocity, TargetVelocity, TargetDistance
 
             -- Tell the train to stop
             ApplyBrakes(BrakePower)
-            print("[-] " .. formatMps(TrainVelocity) .. " Km/h -> " .. formatMps(TargetVelocity) .. " Km/h, Brakes set to " .. BrakePower)
+            print(" [-] " .. formatMps(TrainVelocity) .. " Km/h -> " .. formatMps(TargetVelocity) .. " Km/h, Brakes set to " .. BrakePower)
         end
     else
         -- Accelerate? This probably isn't needed, but let me know.
-        print("Warning! Train is moving too slow to reach the destination!")
+        print(" Warning! Train is moving too slow to reach the destination!")
     end
 end
 
@@ -412,10 +410,10 @@ local function handleEvent(augment_type, stock_uuid, params)
   end
 
   if (augment_type == "LOCO_CONTROL" and stock ~= nil and stock.horsepower ~= nil and not rsdetected) then
-    write_header(params)
+    -- write_header(params)
 
     local loco_name = getLocoName(stock.id)
-    print(loco_name.." detected.")
+    io.write(os.date("%X")..": "..loco_name.." detected.")
 
     -- Assume that the detector and the controller are at the same point.
     local consist = detector.consist()
