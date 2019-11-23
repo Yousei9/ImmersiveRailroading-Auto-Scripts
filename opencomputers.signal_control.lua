@@ -165,7 +165,7 @@ local function OnTrainOverhead(detector, stock_uuid)
 
     -- if green && no wait time let train pass
   if rs.getInput(Settings.RS_Signal) == 0 and Settings.Stop_Duration == 0 then
-    io.write(loco_name.." skipping stop. RS_Signal="..rs.getInput(Settings.RS_Signal)..", Settings.Stop_Duration="..Settings.Stop_Duration.."\n")
+    io.write(os.date("%X")..": "..loco_name.." skipping stop. RS_Signal="..rs.getInput(Settings.RS_Signal)..", Settings.Stop_Duration="..Settings.Stop_Duration.."\n")
     return
   end
 
@@ -175,7 +175,7 @@ local function OnTrainOverhead(detector, stock_uuid)
   local time_stopped = 1
   -- wait until green and wait time passed
   while rs.getInput(Settings.RS_Signal) > 0 or time_stopped <= Settings.Stop_Duration do
-    io.write("\rStopping "..loco_name..". RS_Signal="..rs.getInput(Settings.RS_Signal).."/0, time stopped="..time_stopped.."/"..Settings.Stop_Duration.."s.")
+    io.write("\ros.date("%X")..": "..Stopping "..loco_name..". RS_Signal="..rs.getInput(Settings.RS_Signal).."/0, time stopped="..time_stopped.."/"..Settings.Stop_Duration.."s.")
     os.sleep(1)
     time_stopped = time_stopped + 1
   end
