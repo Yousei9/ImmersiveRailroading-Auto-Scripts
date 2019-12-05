@@ -2,44 +2,36 @@
 Authors: andrboot, Optera
 
 File: ir_signal_control.lua
-Version: 1.1
-Last Modified: 2019-11-22 Optera
 
-Docu Referencing
 Requirements
-  Redstone Card, 2 Redstone IR Augments, 1 Controller Augment, 2 Adapters
+  Redstone Card, 1 IR Detector Augment, 1-n IR Controller Augment
 
 How it works?
-  uses Redstone Input to GO or halt if active (RS_Signal)
-  uses redstone Output to Trigger something (like a signal block redout RS_Lock)
-  uses redstone Input to ensure consist has cleared before going back to normal for multi-locos (RS_BlockClear)
-  Uses Variable to determine if this is a station block or a signal block to ensure smooth running (signal.type 0 = Signal, 1 = Station)
-  Cobbled together by andrboot, with code from LtBrandon & Gazer29 & DonSpruce
-  Refactored by Optera
+  RS_Signal: Redstone Input; stops train while active
+  RS_Lock: Redstone Input; stops train while active, checked before RS_Signal and Stop_Duration
+  Stop_Duration: time in seconds the train should stop
 
-Redstone Refence using Redstone Card on computer NOT redstone block
+Redstone Refence using Redstone Card in Computer
   Bottom (bottom), Number: 0
   Top (top), Number: 1
   Back (back), Number: 2
   Front (front), Number: 3
-  Right (right), Number: 4
-  Left (left), Number: 5
-  Created by Don_Spruce
+  Left (left), Number: 4
+  Right (right), Number: 5
 
 To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.signal_control.lua ir_signal_control.lua
 ]]--
 
-local VERSION = "1.2 2019-11-23"
+local VERSION = "1.2 2019-12-05"
 local CONFIG_FILE = "ir_signal_control.cfg"
 local LOCO_PREFIX = "rolling_stock/locomotives/"
 
 local EndScript = false
 local Settings = {  --default settings, will be overwritten by config and arguments
-  Stop_Duration = 10,
-  RS_Signal = 3,
-  RS_Lock = 5,
-  RS_BlockClear = 0,
+  RS_Signal = 2,
+  RS_Lock = 3,
+  Stop_Duration = 20,
   Throttle = 0.5,
 }
 
@@ -172,6 +164,12 @@ local function OnTrainOverhead(detector, stock_uuid)
   -- stop train
   SetBrakes(1)
 
+  -- wait for RS_Lock = 0
+  while rs.getInput(Settings.RS_Lock) > 0 do
+    io.write("\r"..os.date("%X")..": Stopping "..loco_name..". RS_Lock="..rs.getInput(Settings.RS_Signal).."/0")
+    os.sleep(1)
+  end
+
   local time_stopped = 1
   -- wait until green and wait time passed
   while rs.getInput(Settings.RS_Signal) > 0 or time_stopped <= Settings.Stop_Duration do
@@ -180,11 +178,6 @@ local function OnTrainOverhead(detector, stock_uuid)
     time_stopped = time_stopped + 1
   end
   io.write("\n")
-
-  -- send RS_Lock pulse
-  rs.setOutput(Settings.RS_Lock, 15)
-  os.sleep(0.1)
-  rs.setOutput(Settings.RS_Lock, 0)
 
   -- accelerate
   Horn()
@@ -201,7 +194,21 @@ end
 -- use config file instead of hard coded settings
 getParameters({...})
 os.sleep(1)
+
+-- test components
+for uuid, name in pairs(DetectorAugments) do
+  local augment = component.proxy(uuid)
+  io.write("Detector: "..name.." found at "..table.concat(augment.getPos(),", ").."\n")
+end
+for uuid, name in pairs(ControllerAugments) do
+  local augment = component.proxy(uuid)
+  io.write("Controller: "..name.." found at "..table.concat(augment.getPos(),", ").."\n")
+end
+os.sleep(1)
+
 write_header()
+
+
 
 -- main loop
 repeat

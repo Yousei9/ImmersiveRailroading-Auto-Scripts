@@ -2,8 +2,9 @@
 Authors: Andrew Lalis, Andrew B, LtBrandon, Optera
 
 File: ir_speed_control.lua
-Version: 1.3
-Last Modified: 2019-11-23 Optera
+
+Requirements
+  Redstone Card, 1 IR Detector Augment, 1 IR Controller Augment
 
 This script provides simple ways to set target velocities and distances for
 trains from the mod Immersive Engineering. To set it up, place two augments,
@@ -13,7 +14,6 @@ computer.
 This script focuses on two major actions:
   1. Slowing down the train with brakes.
   2. Speeding up with the throttle.
-Requires - Redstonecard
 
 To install use a network card and run
 wget -f https://raw.githubusercontent.com/Yousei9/ImmersiveRailroading-Auto-Scripts/master/opencomputers.speed_control.lua ir_speed_control.lua
