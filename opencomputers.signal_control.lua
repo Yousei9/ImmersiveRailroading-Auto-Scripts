@@ -206,7 +206,7 @@ for uuid, name in pairs(ControllerAugments) do
   local x,y,z = augment.getPos()
   io.write("Controller: "..name.." found at "..x..","..y..","..z.."\n")
 end
-os.sleep(1)
+os.sleep(5)
 
 write_header()
 
