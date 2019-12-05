@@ -198,11 +198,13 @@ os.sleep(1)
 -- test components
 for uuid, name in pairs(DetectorAugments) do
   local augment = component.proxy(uuid)
-  io.write("Detector: "..name.." found at "..table.concat(augment.getPos(),", ").."\n")
+  local x,y,z = augment.getPos()
+  io.write("Detector: "..name.." found at "..x..","..y..","..z.."\n")
 end
 for uuid, name in pairs(ControllerAugments) do
   local augment = component.proxy(uuid)
-  io.write("Controller: "..name.." found at "..table.concat(augment.getPos(),", ").."\n")
+  local x,y,z = augment.getPos()
+  io.write("Controller: "..name.." found at "..x..","..y..","..z.."\n")
 end
 os.sleep(1)
 
