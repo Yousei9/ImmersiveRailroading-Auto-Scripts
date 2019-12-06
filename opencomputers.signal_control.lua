@@ -7,8 +7,8 @@ Requirements
   Redstone Card, 1 IR Detector Augment, 1-n IR Controller Augment
 
 How it works?
-  RS_Signal: Redstone Input; stops train while active
-  RS_Lock: Redstone Input; stops train while active, checked before RS_Signal and Stop_Duration
+  RS_Signal: Redstone Input; stops train while == 0
+  RS_Lock: Redstone Input; stops train while > 0, checked before RS_Signal and Stop_Duration
   Stop_Duration: time in seconds the train should stop
 
 Redstone Refence using Redstone Card in Computer
@@ -157,7 +157,7 @@ local function OnTrainOverhead(detector, stock_uuid)
 
     -- if green && no wait time let train pass
   if rs.getInput(Settings.RS_Lock) == 0
-  and rs.getInput(Settings.RS_Signal) == 0
+  and rs.getInput(Settings.RS_Signal) > 0
   and Settings.Stop_Duration == 0 then
     io.write(os.date("%X")..": "..loco_name.." passed through.\n")
     return
@@ -167,15 +167,15 @@ local function OnTrainOverhead(detector, stock_uuid)
 
   -- wait for RS_Lock = 0
   while rs.getInput(Settings.RS_Lock) > 0 do
-    io.write("\r"..os.date("%X")..": Stopping "..loco_name..". RS_Lock="..rs.getInput(Settings.RS_Lock).."/0")
+    io.write("\r"..os.date("%X")..": Stopping "..loco_name..". RS_Lock set.")
     SetBrakes(1)
     os.sleep(1)
   end
 
   local time_stopped = 1
   -- wait until green and wait time passed
-  while rs.getInput(Settings.RS_Signal) > 0 or time_stopped <= Settings.Stop_Duration do
-    io.write("\r"..os.date("%X")..": Stopping "..loco_name..". RS_Signal="..rs.getInput(Settings.RS_Signal).."/0, time stopped="..time_stopped.."/"..Settings.Stop_Duration.."s.")
+  while rs.getInput(Settings.RS_Signal) == 0 or time_stopped <= Settings.Stop_Duration do
+    io.write("\r"..os.date("%X")..": Stopping "..loco_name..". RS_Signal="..rs.getInput(Settings.RS_Signal)..", time stopped="..time_stopped.."/"..Settings.Stop_Duration.."s.")
     os.sleep(1)
     time_stopped = time_stopped + 1
   end
